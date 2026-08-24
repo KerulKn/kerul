@@ -37,7 +37,6 @@ export default function ProjectModal({ project, onClose }) {
       }
     }
 
-    // Lock body scroll
     const origOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
 
@@ -61,163 +60,184 @@ export default function ProjectModal({ project, onClose }) {
   }
 
   return (
-    <div className="project-modal-backdrop" onClick={onClose}>
-      <div
-        className={`project-modal ${isZoomed ? 'project-modal--zoomed' : ''}`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Modal Top Bar */}
-        <div className="project-modal__header">
-          <div className="project-modal__title-box">
-            <div className="project-modal__meta">
-              <span className="project-modal__index">{project.index}</span>
-              <span className="project-modal__tag">{project.tag}</span>
+    <>
+      <div className="project-modal-backdrop" onClick={onClose}>
+        <div className="steam-modal" onClick={(e) => e.stopPropagation()}>
+          
+          {/* Header */}
+          <div className="steam-modal__header">
+            <div className="steam-modal__header-left">
+              <span className="steam-modal__index">{project.index}</span>
+              <span className="steam-modal__tag">{project.tag}</span>
+              <h2 className="steam-modal__title">{project.name}</h2>
+            </div>
+
+            <div className="steam-modal__header-right">
               {hasScreenshots && (
-                <span className="project-modal__screen-count">
-                  {screenshots.length} UI Screens
+                <span className="steam-modal__count-badge">
+                  {screenshots.length} Screens Album
                 </span>
               )}
-            </div>
-            <h2 className="project-modal__title">{project.name}</h2>
-          </div>
-
-          <div className="project-modal__actions">
-            {hasScreenshots && (
               <button
                 type="button"
-                className="project-modal__btn-zoom"
-                onClick={() => setIsZoomed(!isZoomed)}
-                title={isZoomed ? 'Exit Expanded View (Esc)' : 'Expand Image'}
+                className="steam-modal__close-btn"
+                onClick={onClose}
+                aria-label="Close modal"
+                title="Close (Esc)"
               >
-                {isZoomed ? '⤢ Normal View' : '⤢ Expand View'}
+                ✕
               </button>
-            )}
-            <button
-              type="button"
-              className="project-modal__btn-close"
-              onClick={onClose}
-              aria-label="Close modal"
-              title="Close (Esc)"
-            >
-              ✕
-            </button>
+            </div>
           </div>
-        </div>
 
-        {/* Modal Body */}
-        <div className="project-modal__body">
-          {hasScreenshots ? (
-            <div className="project-modal__gallery">
-              {/* Main Image Viewer Stage */}
-              <div className="project-modal__stage">
-                <button
-                  type="button"
-                  className="project-modal__nav-btn project-modal__nav-btn--prev"
-                  onClick={handlePrev}
-                  title="Previous (Left Arrow)"
-                  aria-label="Previous image"
-                >
-                  ❮
-                </button>
-
-                <div
-                  className="project-modal__image-wrapper"
-                  onClick={() => setIsZoomed(!isZoomed)}
-                  title="Click to toggle expanded view"
-                >
-                  <img
-                    src={getAssetUrl(activeScreen.url)}
-                    alt={activeScreen.title}
-                    className="project-modal__main-img"
-                  />
-                  <div className="project-modal__badge-counter">
-                    {activeIdx + 1} / {screenshots.length}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="project-modal__nav-btn project-modal__nav-btn--next"
-                  onClick={handleNext}
-                  title="Next (Right Arrow)"
-                  aria-label="Next image"
-                >
-                  ❯
-                </button>
-              </div>
-
-              {/* Caption / Feature Notes */}
-              <div className="project-modal__caption-card">
-                <div className="project-modal__caption-header">
-                  <span className="project-modal__caption-dot" />
-                  <h4 className="project-modal__caption-title">{activeScreen.title}</h4>
-                </div>
-                <p className="project-modal__caption-text">{activeScreen.caption}</p>
-              </div>
-
-              {/* Thumbnail Strip */}
-              {screenshots.length > 1 && (
-                <div className="project-modal__thumbs-track">
-                  {screenshots.map((item, idx) => (
+          {/* Steam Grid: Left Media + Right Details */}
+          <div className="steam-modal__grid">
+            
+            {/* Left Media Stage & Album */}
+            <div className="steam-modal__media-col">
+              {hasScreenshots ? (
+                <>
+                  {/* Big Featured Screen Viewer */}
+                  <div className="steam-modal__main-viewport">
                     <button
                       type="button"
-                      key={item.url}
-                      className={`project-modal__thumb ${
-                        idx === activeIdx ? 'project-modal__thumb--active' : ''
-                      }`}
-                      onClick={() => setActiveIdx(idx)}
+                      className="steam-nav-btn steam-nav-btn--prev"
+                      onClick={handlePrev}
+                      title="Previous screen (←)"
+                      aria-label="Previous image"
                     >
-                      <img src={getAssetUrl(item.url)} alt={item.title} />
-                      <span className="project-modal__thumb-title">{item.title}</span>
+                      ❮
                     </button>
-                  ))}
+
+                    <div
+                      className="steam-modal__main-img-wrap"
+                      onClick={() => setIsZoomed(true)}
+                      title="Click to expand fullscreen"
+                    >
+                      <img
+                        src={getAssetUrl(activeScreen.url)}
+                        alt={activeScreen.title}
+                        className="steam-modal__main-img"
+                      />
+                      <div className="steam-modal__overlay-actions">
+                        <span className="steam-modal__zoom-hint">⤢ Click to Fullscreen</span>
+                        <span className="steam-modal__counter-pill">
+                          {activeIdx + 1} / {screenshots.length}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="steam-nav-btn steam-nav-btn--next"
+                      onClick={handleNext}
+                      title="Next screen (→)"
+                      aria-label="Next image"
+                    >
+                      ❯
+                    </button>
+                  </div>
+
+                  {/* Album Thumbnail Slider with Custom Scrollbar */}
+                  <div className="steam-modal__album-container">
+                    <div className="steam-modal__album-track">
+                      {screenshots.map((item, idx) => (
+                        <button
+                          key={item.url}
+                          type="button"
+                          className={`steam-thumb ${idx === activeIdx ? 'steam-thumb--active' : ''}`}
+                          onClick={() => setActiveIdx(idx)}
+                        >
+                          <img src={getAssetUrl(item.url)} alt={item.title} />
+                          <span className="steam-thumb__label">{item.title}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="steam-modal__placeholder">
+                  <div className="steam-placeholder-icon">▤</div>
+                  <h3>UI/UX Showcase Coming Soon</h3>
+                  <p>Screenshots for {project.name} are currently being compiled.</p>
                 </div>
               )}
             </div>
-          ) : (
-            <div className="project-modal__empty">
-              <div className="project-modal__empty-icon">▤</div>
-              <h3>UI/UX Showcase Coming Soon</h3>
-              <p>
-                Screenshots for {project.name} are currently being compiled. You can review the system
-                architecture, core technologies, and lifecycle phases below.
-              </p>
-            </div>
-          )}
 
-          {/* Project Details Footer */}
-          <div className="project-modal__footer-info">
-            <div className="project-modal__desc-box">
-              <p className="project-modal__desc-label">System Overview</p>
-              <p className="project-modal__desc">{project.description}</p>
-            </div>
+            {/* Right Column: Project Description, Selected Screen Info, Architecture & Stack */}
+            <div className="steam-modal__sidebar-col">
+              
+              {/* Project Description */}
+              <div className="steam-sidebar__panel">
+                <p className="steam-sidebar__label">Project Overview</p>
+                <p className="steam-sidebar__desc">{project.description}</p>
+              </div>
 
-            {/* Lifecycle phases */}
-            {project.phases && (
-              <div className="project-modal__section-block">
-                <p className="project-modal__meta-label">Architecture & Lifecycle</p>
-                <div className="project__phases">
-                  {project.phases.map((phase) => (
-                    <span className="project__phase" key={phase}>
-                      {phase}
+              {/* Dynamic Screen Spotlight */}
+              {hasScreenshots && activeScreen && (
+                <div className="steam-sidebar__panel steam-sidebar__panel--spotlight">
+                  <div className="steam-spotlight__head">
+                    <span className="steam-spotlight__dot" />
+                    <p className="steam-sidebar__label">Active Screen View</p>
+                  </div>
+                  <h4 className="steam-spotlight__title">{activeScreen.title}</h4>
+                  <p className="steam-spotlight__caption">{activeScreen.caption}</p>
+                </div>
+              )}
+
+              {/* Architecture Phases */}
+              {project.phases && (
+                <div className="steam-sidebar__panel">
+                  <p className="steam-sidebar__label">Architecture & Lifecycle</p>
+                  <div className="steam-tags-wrap">
+                    {project.phases.map((phase) => (
+                      <span key={phase} className="steam-phase-tag">
+                        {phase}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Tech Stack */}
+              <div className="steam-sidebar__panel">
+                <p className="steam-sidebar__label">Technologies & Stack</p>
+                <div className="steam-tags-wrap">
+                  {project.stack.map((s) => (
+                    <span key={s} className="steam-tech-tag">
+                      {s}
                     </span>
                   ))}
                 </div>
               </div>
-            )}
 
-            {/* Tech Stack */}
-            <div className="project-modal__section-block">
-              <p className="project-modal__meta-label">Tech Stack</p>
-              <div className="project__stack">
-                {project.stack.map((s) => (
-                  <span key={s}>{s}</span>
-                ))}
-              </div>
             </div>
+
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Fullscreen Lightbox Zoom Overlay */}
+      {isZoomed && hasScreenshots && (
+        <div className="steam-zoom-overlay" onClick={() => setIsZoomed(false)}>
+          <div className="steam-zoom-content" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="steam-zoom-close"
+              onClick={() => setIsZoomed(false)}
+              title="Close Fullscreen (Esc)"
+            >
+              ✕ Close Fullscreen
+            </button>
+            <img
+              src={getAssetUrl(activeScreen.url)}
+              alt={activeScreen.title}
+              className="steam-zoom-img"
+            />
+            <p className="steam-zoom-caption">{activeScreen.title} — {activeScreen.caption}</p>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
