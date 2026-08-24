@@ -79,22 +79,22 @@ export const projects = [
       {
         title: 'Executive Dashboard',
         caption: 'Central analytics panel showing property occupancy rates, pending maintenance alerts, revenue summaries, and recent activity logs.',
-        url: '/projects/property/web/dashboard.png',
+        url: 'projects/property/web/dashboard.png',
       },
       {
         title: 'User & Tenant Directory',
         caption: 'Comprehensive management of tenant profiles, active leases, role assignments, and emergency contact details.',
-        url: '/projects/property/web/user.png',
+        url: 'projects/property/web/user.png',
       },
       {
         title: 'Communication Hub',
         caption: 'Direct tenant messaging, automated broadcast announcements, service dispatch tickets, and complaint logs.',
-        url: '/projects/property/web/communication.png',
+        url: 'projects/property/web/communication.png',
       },
       {
         title: 'Admin Authentication',
         caption: 'Secure access control with multi-role permissions, JWT session handling, and credential encryption.',
-        url: '/projects/property/web/login.png',
+        url: 'projects/property/web/login.png',
       },
     ],
   },

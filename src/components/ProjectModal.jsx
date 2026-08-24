@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
+export function getAssetUrl(url) {
+  if (!url) return ''
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url
+  }
+  const clean = url.replace(/^\.?\//, '')
+  const base = import.meta.env.BASE_URL || './'
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`
+  return `${normalizedBase}${clean}`
+}
+
 export default function ProjectModal({ project, onClose }) {
   const [activeIdx, setActiveIdx] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
@@ -115,7 +126,7 @@ export default function ProjectModal({ project, onClose }) {
                   title="Click to toggle expanded view"
                 >
                   <img
-                    src={activeScreen.url}
+                    src={getAssetUrl(activeScreen.url)}
                     alt={activeScreen.title}
                     className="project-modal__main-img"
                   />
@@ -156,7 +167,7 @@ export default function ProjectModal({ project, onClose }) {
                       }`}
                       onClick={() => setActiveIdx(idx)}
                     >
-                      <img src={item.url} alt={item.title} />
+                      <img src={getAssetUrl(item.url)} alt={item.title} />
                       <span className="project-modal__thumb-title">{item.title}</span>
                     </button>
                   ))}
