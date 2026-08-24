@@ -10,25 +10,38 @@ const DIGITAL_LOGS = [
   'ai_agent.dispatch({ task: "optimize" })',
 ]
 
-const ICONS = [
+const TECH_STACK = [
   { icon: 'devicon-flutter-plain', color: '#54C5F8', name: 'Flutter' },
+  { icon: 'devicon-dart-plain', color: '#0175C2', name: 'Dart' },
   { icon: 'devicon-react-original', color: '#61DAFB', name: 'React' },
+  { icon: 'devicon-javascript-plain', color: '#F7DF1E', name: 'JavaScript' },
   { icon: 'devicon-laravel-plain', color: '#FF2D20', name: 'Laravel' },
+  { icon: 'devicon-php-plain', color: '#777BB4', name: 'PHP' },
+  { icon: 'devicon-python-plain', color: '#3776AB', name: 'Python' },
   { icon: 'devicon-mysql-plain', color: '#4479A1', name: 'MySQL' },
   { icon: 'devicon-postgresql-plain', color: '#4169E1', name: 'PostgreSQL' },
-  { icon: 'devicon-python-plain', color: '#3776AB', name: 'Python' },
-  { icon: 'devicon-javascript-plain', color: '#F7DF1E', name: 'JavaScript' },
+  { icon: 'devicon-fastapi-plain', color: '#009688', name: 'REST API' },
   { icon: 'devicon-git-plain', color: '#F05032', name: 'Git' },
+  { icon: 'devicon-github-original', color: '#EDE8E3', name: 'GitHub' },
+  { icon: 'devicon-figma-plain', color: '#F24E1E', name: 'Figma' },
+  { icon: 'devicon-html5-plain', color: '#E34F26', name: 'HTML5' },
+  { icon: 'devicon-css3-plain', color: '#1572B6', name: 'CSS3' },
+  { icon: 'devicon-cplusplus-plain', color: '#00599C', name: 'C++' },
+  { icon: 'devicon-wordpress-plain', color: '#21759B', name: 'WordPress' },
+  { icon: 'devicon-vscode-plain', color: '#007ACC', name: 'VS Code' },
 ]
+
+// Duplicate list inside group to ensure width easily exceeds any 4K/ultrawide screen width (>5000px)
+const MARQUEE_ITEMS = [...TECH_STACK, ...TECH_STACK]
 
 // Pure static memoized Marquee Strip — NEVER re-renders on state changes
 const BottomMarquee = memo(function BottomMarquee() {
   return (
-    <div className="bottom-strip">
+    <div className="bottom-strip" aria-label="Technology stack marquee">
       <div className="bottom-strip__track">
         {/* Group 1 */}
         <div className="bottom-strip__group">
-          {ICONS.map((item, idx) => (
+          {MARQUEE_ITEMS.map((item, idx) => (
             <div className="bottom-strip__item" key={`g1-${idx}`}>
               <i className={item.icon} style={{ color: item.color }} />
               <span>{item.name}</span>
@@ -38,7 +51,7 @@ const BottomMarquee = memo(function BottomMarquee() {
 
         {/* Group 2 (Exact Duplicate for Continuous Zero-Stutter Loop) */}
         <div className="bottom-strip__group" aria-hidden="true">
-          {ICONS.map((item, idx) => (
+          {MARQUEE_ITEMS.map((item, idx) => (
             <div className="bottom-strip__item" key={`g2-${idx}`}>
               <i className={item.icon} style={{ color: item.color }} />
               <span>{item.name}</span>

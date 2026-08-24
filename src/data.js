@@ -65,6 +65,7 @@ export const projects = [
     description:
       'Full-stack pharmacy system covering inventory management, prescription tracking, patient records and billing. Dual platform — web admin (Laravel + React) and mobile app (Flutter).',
     phases: ['Requirements', 'System Design', 'API Docs', 'UI/UX', 'Mobile Dev', 'Deployment'],
+    screenshots: [],
   },
   {
     index: '02',
@@ -74,6 +75,28 @@ export const projects = [
     description:
       'Property listing, tenant management, lease tracking and payment processing platform. Web-based system with RESTful API backend and real-time notifications.',
     phases: ['Requirements', 'System Design', 'API Docs', 'UI/UX', 'Web Dev', 'Deployment'],
+    screenshots: [
+      {
+        title: 'Executive Dashboard',
+        caption: 'Central analytics panel showing property occupancy rates, pending maintenance alerts, revenue summaries, and recent activity logs.',
+        url: '/projects/property/web/dashboard.png',
+      },
+      {
+        title: 'User & Tenant Directory',
+        caption: 'Comprehensive management of tenant profiles, active leases, role assignments, and emergency contact details.',
+        url: '/projects/property/web/user.png',
+      },
+      {
+        title: 'Communication Hub',
+        caption: 'Direct tenant messaging, automated broadcast announcements, service dispatch tickets, and complaint logs.',
+        url: '/projects/property/web/communication.png',
+      },
+      {
+        title: 'Admin Authentication',
+        caption: 'Secure access control with multi-role permissions, JWT session handling, and credential encryption.',
+        url: '/projects/property/web/login.png',
+      },
+    ],
   },
   {
     index: '03',
@@ -83,6 +106,7 @@ export const projects = [
     description:
       'Comprehensive BMS covering maintenance scheduling, asset tracking, defect reporting and contractor management. Mobile app for field teams, web dashboard for managers.',
     phases: ['Requirements', 'Architecture', 'API Docs', 'UI/UX', 'Mobile Dev', 'Deploy'],
+    screenshots: [],
   },
   {
     index: '04',
@@ -92,6 +116,7 @@ export const projects = [
     description:
       'Full-stack coffee ordering system inspired by ZUS Coffee. Three user modules (Admin, Staff, Client), menu management, promotions, coupons and end-to-end order processing.',
     phases: ['Requirements', 'Design', 'API Docs', 'UI/UX', 'Mobile Dev', 'Deploy'],
+    screenshots: [],
   },
   {
     index: '05',
@@ -101,6 +126,7 @@ export const projects = [
     description:
       'Plantation operations system with AI agent integration (Claude + Gemini) for yield prediction, harvest scheduling, worker task assignment and field analytics.',
     phases: ['Requirements', 'Architecture', 'AI Design', 'UI/UX', 'Mobile Dev', 'Deploy'],
+    screenshots: [],
   },
 ]
 
